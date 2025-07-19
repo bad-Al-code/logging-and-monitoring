@@ -11,8 +11,8 @@ app.get('/health', (req: Request, res: Response) => {
   res.status(200).json({ status: 'UP' });
 });
 
-app.all('*', async (_req: Request, _res: Response) => {
-  throw new NotFoundError();
+app.use((req, res, next) => {
+  next(new NotFoundError());
 });
 
 app.use(errorHandler);
