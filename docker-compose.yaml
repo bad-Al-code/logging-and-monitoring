@@ -1,0 +1,22 @@
+services:
+  postgres-auth:
+    image: postgres:17.5
+    container_name: postgres-auth-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: auth_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_auth_data:/var.lib/postgresql/data
+    networks:
+      - app-network
+
+volumes:
+  postgres_auth_data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
