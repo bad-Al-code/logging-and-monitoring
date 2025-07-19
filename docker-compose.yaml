@@ -13,6 +13,14 @@ services:
     networks:
       - app-network
 
+  redis:
+    image: redis:alpine3.20
+    container_name: redis-bus
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
 volumes:
   postgres_auth_data:
     driver: local
