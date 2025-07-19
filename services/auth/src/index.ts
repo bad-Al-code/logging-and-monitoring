@@ -1,4 +1,5 @@
 import { app } from './app';
+import './lib/redis';
 
 const PORT = process.env.PORT || 3001;
 
