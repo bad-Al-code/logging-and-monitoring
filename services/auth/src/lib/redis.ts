@@ -1,9 +1,10 @@
 import 'dotenv/config';
 import { createClient } from 'redis';
 
+import { env } from '../config';
 import logger from '../config/logger';
 
-const redisUrl = process.env.REDIS_URL;
+const redisUrl = env.REDIS_URL;
 if (!redisUrl) {
   throw new Error('REDIS_URL is not defined');
 }
