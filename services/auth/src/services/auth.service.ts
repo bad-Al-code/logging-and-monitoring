@@ -8,6 +8,7 @@ import { Token } from '../lib/token';
 
 export type RegisterUserDTO = Pick<NewUser, 'email'> & { password: string };
 export type LoginUserDTO = RegisterUserDTO;
+export type UserResponseDto = Omit<User, 'passwordHash'>;
 
 export class AuthService {
   private userRepository: UserRepository;
@@ -18,7 +19,9 @@ export class AuthService {
     this.eventPublisher = new EventPublisher('user_events');
   }
 
-  public async registerUser(userData: RegisterUserDTO) {
+  public async registerUser(
+    userData: RegisterUserDTO
+  ): Promise<UserResponseDto> {
     const { email, password } = userData;
     logger.info(`Registration attempt for email: ${email}`);
 
@@ -48,12 +51,13 @@ export class AuthService {
       },
     });
 
-    return newUser;
+    const { passwordHash: _, ...userResponse } = newUser;
+    return userResponse;
   }
 
   public async loginUser(
     credentials: LoginUserDTO
-  ): Promise<{ user: User; token: string }> {
+  ): Promise<{ userResponse: UserResponseDto; token: string }> {
     const { email, password } = credentials;
     logger.info(`Login attempt for email: ${email}`);
 
@@ -79,6 +83,7 @@ export class AuthService {
 
     logger.info(`User logged in successfully`, { userId: user.id });
 
-    return { user, token: userToken };
+    const { passwordHash: __, ...userResponse } = user;
+    return { userResponse, token: userToken };
   }
 }

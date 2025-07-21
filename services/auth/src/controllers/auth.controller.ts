@@ -14,13 +14,9 @@ export const register = async (
   try {
     const { email, password } = req.body;
 
-    const newUser = await authService.registerUser({ email, password });
+    const userResponse = await authService.registerUser({ email, password });
 
-    res.status(StatusCodes.CREATED).json({
-      id: newUser.id,
-      email: newUser.email,
-      role: newUser.role,
-    });
+    res.status(StatusCodes.CREATED).json(userResponse);
   } catch (error) {
     next(error);
   }
@@ -34,11 +30,14 @@ export const login = async (
   try {
     const { email, password } = req.body;
 
-    const { user, token } = await authService.loginUser({ email, password });
+    const { userResponse, token } = await authService.loginUser({
+      email,
+      password,
+    });
 
     Token.setCookie(res, token);
 
-    res.status(StatusCodes.OK).json(user);
+    res.status(StatusCodes.OK).json(userResponse);
   } catch (error) {
     next(error);
   }

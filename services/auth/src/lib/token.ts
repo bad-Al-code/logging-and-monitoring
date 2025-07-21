@@ -13,7 +13,7 @@ export interface UserPayload {
 export class Token {
   private static readonly JWT_EXPIRES_IN = '1d';
   private static readonly COOKIE_MAX_AGE = 24 * 60 * 60 * 1000;
-  private static readonly COOKIE_NAME = 'jwt';
+  private static readonly COOKIE_NAME = 'token';
 
   public static generate(payload: UserPayload): string {
     return jwt.sign(payload, env.JWT_SECRET, {
