@@ -1,12 +1,10 @@
-import jwt from 'jsonwebtoken';
-
-import { env } from '../config';
 import logger from '../config/logger';
 import { NewUser, User } from '../db';
 import { UserRepository } from '../db/repositories/user.repository';
 import { BadRequestError, UnauthorizedError } from '../errors';
 import { EventPublisher } from '../events/event-publisher';
 import { Password } from '../lib/password';
+import { Token } from '../lib/token';
 
 export type RegisterUserDTO = Pick<NewUser, 'email'> & { password: string };
 export type LoginUserDTO = RegisterUserDTO;
@@ -73,14 +71,14 @@ export class AuthService {
       throw new UnauthorizedError('Invalid credentials');
     }
 
-    const userJwt = jwt.sign(
-      { id: user.id, email: user.email, role: user.role },
-      env.JWT_SECRET,
-      { expiresIn: '1d' }
-    );
+    const userToken = Token.generate({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    });
 
     logger.info(`User logged in successfully`, { userId: user.id });
 
-    return { user, token: userJwt };
+    return { user, token: userToken };
   }
 }

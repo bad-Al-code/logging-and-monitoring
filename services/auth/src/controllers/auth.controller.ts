@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
-import { env } from '../config';
+import { Token } from '../lib/token';
 import { AuthService } from '../services/auth.service';
 
 const authService = new AuthService();
@@ -36,11 +36,7 @@ export const login = async (
 
     const { user, token } = await authService.loginUser({ email, password });
 
-    res.cookie('jwt', token, {
-      httpOnly: true,
-      secure: env.NODE_ENV === 'production',
-      maxAge: 24 * 60 * 60 * 1000,
-    });
+    Token.setCookie(res, token);
 
     res.status(StatusCodes.OK).json(user);
   } catch (error) {
