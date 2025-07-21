@@ -19,14 +19,14 @@ export class AuthService {
   public async registerUser(userData: RegisterUserDTO) {
     const { email, password } = userData;
 
-    logger.info(`Registration attempt for email: ${email}`);
-
     const existingUser = await this.userRepository.findByEmail(email);
     if (existingUser) {
       logger.warn(`Registration failed: Email ${email} already in use.`);
 
       throw new BadRequestError('Email already in use.');
     }
+
+    logger.info(`Registration attempt for email: ${email}`);
 
     const passwordHash = await Password.toHash(password);
 
