@@ -1,5 +1,6 @@
 import express, { Application, json, Request, Response } from 'express';
 
+import cookieParser from 'cookie-parser';
 import { NotFoundError } from './errors';
 import { errorHandler } from './middlewares';
 import { authRouter } from './routes';
@@ -7,6 +8,7 @@ import { authRouter } from './routes';
 const app: Application = express();
 
 app.use(json());
+app.use(cookieParser());
 
 app.get('/health', (req: Request, res: Response) => {
   res.status(200).json({ status: 'UP' });

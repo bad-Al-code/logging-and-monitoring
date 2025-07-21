@@ -22,7 +22,9 @@
   "type": "commonjs",
   "devDependencies": {
     "@eslint/js": "^9.31.0",
+    "@types/cookie-parser": "^1.4.9",
     "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.0.15",
     "@types/pg": "^8.15.4",
     "drizzle-kit": "^0.31.4",
@@ -37,10 +39,12 @@
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.0",
     "drizzle-orm": "^0.44.3",
     "express": "^5.1.0",
     "http-status-codes": "^2.3.0",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.16.3",
     "redis": "^5.6.0",
     "winston": "^3.17.0",

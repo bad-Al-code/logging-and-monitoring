@@ -11,3 +11,5 @@ export const registerSchema = z.object({
       .max(50, 'Password must be at most 50 characters long'),
   }),
 });
+
+export const loginSchema = registerSchema;
