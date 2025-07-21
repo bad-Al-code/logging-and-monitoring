@@ -9,6 +9,6 @@ export const users = pgTable('users', {
     .primaryKey()
     .notNull(),
   email: text('email').notNull().unique(),
-  passwordHash: text('password_has').notNull(),
+  passwordHash: text('password_hash').notNull(),
   role: userRoleEnum('role').default('student').notNull(),
 });
